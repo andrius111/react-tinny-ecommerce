@@ -1,10 +1,10 @@
 import React from 'react'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import PropTypes from 'prop-types'
+import { Card, Button } from 'react-bootstrap'
 
 import Classes from './ProductsList.module.scss'
 
-const ProductsList = () => {
+const ProductsList = (props) => {
   const products = [
     { id: 1, name: 'Lorem Ipsum', price: 'U$ 99,99' },
     { id: 2, name: 'Java Course', price: 'U$ 29,99' },
@@ -18,6 +18,9 @@ const ProductsList = () => {
 
   const handleBuy = (event, product) => {
     event.preventDefault()
+
+    props.addProduct(product)
+    props.displayMessage(product)
   }
 
   return (
@@ -52,6 +55,11 @@ const ProductsList = () => {
       </Card>  
     )
   )
+}
+
+ProductsList.propTypes = {
+  addProduct: PropTypes.func.isRequired,
+  displayMessage: PropTypes.func.isRequired
 }
 
 export default ProductsList

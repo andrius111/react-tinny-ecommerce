@@ -10,10 +10,36 @@ const Main = () => {
   const [showCheckout, setShowCheckout] = useState(false)
   const [total, setTotal] = useState('0,00')
   
+  const addProduct = (product) => {
+    const objCart = Object.assign({}, cart)
+    
+    let newProduct = true
+
+    objCart.products.forEach((productInCart, index) => {
+      if (productInCart.name === product.name) {
+        objCart.products[index].quantity++
+        newProduct = false
+      }
+    })
+
+    if (newProduct) {
+      objCart.products.push({
+        name: product.name, 
+        price: product.price,
+        quantity: 1
+      })
+    }
+
+    setCart(objCart)
+  }
+
   return (
     <React.Fragment>
       <Menu />
-      <Products />
+      <Products 
+        visible={ showProducts }
+        addProduct={ addProduct }
+      />
       <Checkout />
     </React.Fragment>
   )
