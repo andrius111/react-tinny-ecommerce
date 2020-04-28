@@ -24,6 +24,7 @@ const Main = () => {
 
     if (newProduct) {
       objCart.products.push({
+        id: product.id,
         name: product.name, 
         price: product.price,
         quantity: 1
@@ -33,13 +34,30 @@ const Main = () => {
     setCart(objCart)
   }
 
+  const handleShowProducts = () => {
+    setShowCheckout(false)
+    setShowProducts(true)
+  }
+
+  const handleShowCheckout = (total) => {
+    setShowCheckout(true)
+    setShowProducts(false)
+    setTotal(total)
+  }
+
   return (
     <React.Fragment>
-      <Menu />
+      <Menu 
+        products={ cart.products }
+        handleShowProducts={ handleShowProducts }
+        handleShowCheckout={ handleShowCheckout }
+      />
+
       <Products 
         visible={ showProducts }
         addProduct={ addProduct }
       />
+
       <Checkout />
     </React.Fragment>
   )
