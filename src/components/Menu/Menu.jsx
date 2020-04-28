@@ -33,7 +33,12 @@ const Menu = (props) => {
       bg="dark"
       variant="dark"
     >
-      <Navbar.Brand>Tinny Ecommerce</Navbar.Brand>
+      <Navbar.Brand 
+        onClick={ props.handleShowProducts }
+        href="#"
+      >
+        Tinny Ecommerce
+      </Navbar.Brand>
 
       <Navbar.Collapse className="justify-content-end">
         <Nav>
@@ -45,7 +50,7 @@ const Menu = (props) => {
                   icon={ faShoppingCart } 
                   className={ Classes.menu_navdropdown_icon_padding_right }
                 />
-                Carrinho
+                Cart
               </div>
             }
           >
@@ -57,7 +62,7 @@ const Menu = (props) => {
                 icon={ faShoppingBasket } 
                 className={ Classes.menu_navdropdown_icon_padding_right } 
               />
-              <strong>Produtos</strong>
+              <strong>Products</strong>
             </NavDropdown.Item>
 
             <NavDropdown.Divider />
