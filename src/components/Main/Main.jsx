@@ -45,6 +45,10 @@ const Main = () => {
     setTotal(total)
   }
 
+  const handleClearCart = () => {
+    setCart({ products: [] })
+  }
+
   return (
     <React.Fragment>
       <Menu 
@@ -58,7 +62,13 @@ const Main = () => {
         addProduct={ addProduct }
       />
 
-      <Checkout />
+      <Checkout 
+        visible={ showCheckout }
+        handleShowProducts={ handleShowProducts }
+        total={ total }
+        products={ cart }
+        handleClearCart={ handleClearCart }
+      />
     </React.Fragment>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Alert } from 'react-bootstrap'
+import { Alert, Container } from 'react-bootstrap'
 
 import ProductsList from './ProductsList/ProductsList'
 
@@ -24,7 +24,7 @@ const Products = (props) => {
   }
 
   return (
-    <div className={ visible() }>
+    <Container className={ visible() }>
       <Alert
         variant="success"
         show={ showMessage }
@@ -37,7 +37,7 @@ const Products = (props) => {
         displayMessage={ displayMessage }
         addProduct={ props.addProduct }
       />
-    </div>
+    </Container>
   )
 }
 
