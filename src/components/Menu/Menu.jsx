@@ -28,6 +28,16 @@ const Menu = (props) => {
     return total.toFixed(2).toString().replace('.', ',')
   }
   
+  const getTotalQuantity = () => {
+    let totalQuantity = 0 
+    
+    props.products.forEach(product => {
+      totalQuantity += product.quantity
+    })
+
+    return totalQuantity > 0 ? `(${totalQuantity})` : '' 
+  }
+
   return (
     <Navbar
       bg="dark"
@@ -50,7 +60,7 @@ const Menu = (props) => {
                   icon={ faShoppingCart } 
                   className={ Classes.menu_navdropdown_icon_padding_right }
                 />
-                Cart
+                Cart <strong>{ getTotalQuantity() }</strong>
               </div>
             }
           >

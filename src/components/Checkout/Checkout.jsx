@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
 import { Formik } from 'formik'
+import * as yup from 'yup'
 import { 
   Form, 
   Row, 
   Col, 
   Button, 
-  Jumbotron,
   Modal, 
   Container
 } from 'react-bootstrap'
@@ -19,7 +19,16 @@ const Checkout = (props) => {
   const [birthDate, setBirthDate] = useState(null)
   const [formIsSend, setFormIsSend] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [showErrorModal, setShowErrorModal] = useState(false)
+  
+  const schema = yup.object({
+    email: yup.string().email().required(),
+    fullName: yup.string().required().min(5),
+    postalCode: yup.string().required(),
+    address: yup.string().required(),
+    city: yup.string().required(),
+    state: yup.string().required(),
+    promotionalEmails: yup.string().required()
+  })
 
   const visible = () => {
     return props.visible ? '' : ' ' + Classes.checkout_hidden
@@ -41,8 +50,15 @@ const Checkout = (props) => {
     return "form-control is-invalid"
   }
 
-  const handleCheckout = (values) => {
+  const handleContinue = () => {
+    setFormIsSend(true)
+    setShowModal(false)
+    props.handleShowProducts()
+  }
 
+  const handleCheckout = (data) => {
+    setShowModal(true)
+    props.handleClearCart()
   }
 
   return (
@@ -51,6 +67,7 @@ const Checkout = (props) => {
 
       <Formik
         onSubmit={ (values) => handleCheckout(values) }
+        validationSchema={ schema }
         initialValues={{
           email: '',
           fullName: '',
@@ -103,7 +120,7 @@ const Checkout = (props) => {
               <Col sm={ 9 }>
                 <Form.Control
                   type="text"
-                  name="full-name"
+                  name="fullName"
                   data-testid="input-full-name"
                   value={ values.fullName }
                   onChange={ handleChange }
@@ -148,7 +165,7 @@ const Checkout = (props) => {
               <Col sm={ 9 }>
                 <Form.Control
                   type="text"
-                  name="postal-code"
+                  name="postalCode"
                   data-testid="input-postal-code"
                   values={ values.postalCode }
                   onChange={ handleChange }
@@ -235,7 +252,7 @@ const Checkout = (props) => {
 
               <Form.Check 
                 inline
-                name="radio-promotional-emails"
+                name="promotionalEmails"
                 type="radio"
                 id="radio-promotional-emails-yes"
                 value="Y"
@@ -247,7 +264,7 @@ const Checkout = (props) => {
 
               <Form.Check 
                 inline
-                name="radio-promotional-emails"
+                name="promotionalEmails"
                 type="radio"
                 id="radio-promotional-emails-no"
                 value="N"
@@ -273,8 +290,9 @@ const Checkout = (props) => {
       </Formik>
 
       <Modal
-        show={ false }
+        show={ showModal }
         data-testid="susscessful-modal-checkout"
+        onHide={ handleContinue }
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -287,28 +305,10 @@ const Checkout = (props) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="success">
-            Continue
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal
-        show={ false }
-        data-testid="error-modal-checkout"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            An error has ocurred!
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          Try again later
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="danger">
+          <Button 
+            variant="success" 
+            onClick={ handleContinue }
+          >
             Continue
           </Button>
         </Modal.Footer>
