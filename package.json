@@ -18,7 +18,7 @@
     "react-bootstrap": "^1.0.1",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "yup": "^0.28.4"
   },
   "scripts": {
